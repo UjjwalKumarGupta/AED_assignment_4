@@ -34,4 +34,18 @@ public class personDirectory {
         personD.set(i, p);
         return p;}
     
+    
+    public boolean uni(String id) {
+        for(person p : personD) {
+        if(p.getPersonID()==(Integer.parseInt(id)))
+        return true;
+        }
+        return false;
+}
+    
+    
+    public void deletePerson(person p){
+    personD.remove(p);
+}
+    
 }

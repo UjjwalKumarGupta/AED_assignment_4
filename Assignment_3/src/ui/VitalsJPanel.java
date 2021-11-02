@@ -5,6 +5,8 @@
  */
 package ui;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import model.EncounterHistory;
 import model.VitalSigns;
@@ -57,6 +59,8 @@ public class VitalsJPanel extends javax.swing.JPanel {
         btnSave = new javax.swing.JButton();
         txtComm = new javax.swing.JTextField();
         lblEdate1 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         lblTitle.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(204, 0, 0));
@@ -189,49 +193,83 @@ public class VitalsJPanel extends javax.swing.JPanel {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-       int check=0;
-       for(person p : personD.getPersonD()){
-            if(p.getPersonID() == Integer.parseInt(txtId.getText())){
-                check = 1;
-            
-            
-            
-            
-                String date = txtEdate.getText();
-                double temperature = Double.parseDouble(txtTemp.getText());
-                double bloodPressure = Double.parseDouble(txtBp.getText());
-                int pulse = Integer.parseInt(txtPulse.getText());
-                int encounter = Integer.parseInt(txtEno.getText());
-                int id = Integer.parseInt(txtId.getText());
-                String community = txtComm.getText();
-
-                VitalSigns vs = history.addNewVitals();
-
-                vs.setBloodPressure(bloodPressure);
-                vs.setDate(date);
-                vs.setPulse(pulse);
-                vs.setTemperature(temperature);
-                vs.setEncounter(encounter);
-                vs.setId(id);
-                JOptionPane.showMessageDialog(this, "Person Vitals added to Encounter History !");
-            
-                if(bloodPressure <90 || bloodPressure >120){
-                
-                patient pa = patientD.addNewPatient();
-                
-                pa.setBp(bloodPressure);
-                pa.setEdate(date);
-                pa.setEno(encounter);
-                pa.setPid(id);
-                pa.setPul(pulse);
-                pa.setTemp(temperature);
-                pa.setComm(community);
-                    
-                }
-            
-            
-            
+     boolean flag;
+     String alphapattern = "^[a-zA-Z\\s]{1,}$";
+     String numpattern = "\\d+";
+     String alphanum = "^[a-zA-Z0-9\\s]+$";
+     String decimal = "[+-]?([0-9]*[.])?[0-9]+";
+        
+     Pattern aP = Pattern.compile(alphapattern);
+     Pattern nP = Pattern.compile(numpattern);
+     Pattern an = Pattern.compile(alphanum);
+     Pattern de = Pattern.compile(decimal);
+     
+     
+     Matcher cM = nP.matcher(txtId.getText());
+     Matcher mM = de.matcher(txtTemp.getText());
+     Matcher ctM = nP.matcher(txtBp.getText());
+     Matcher yM = nP.matcher(txtPulse.getText());
+     Matcher sM = nP.matcher(txtEno.getText());
+     Matcher sr = an.matcher(txtEdate.getText());
+     Matcher Com = aP.matcher(txtComm.getText());
+     
+     
+     if ((!cM.matches()) || (!mM.matches()) || (!ctM.matches()) || (!yM.matches())|| (!sM.matches()) || (!sr.matches()) || (!Com.matches()))
+            {
+            flag=false;
             }
+         
+         else{
+                flag=true;
+            }
+        
+        
+  
+     if (flag == true){
+        
+        int check=0;
+        for(person p : personD.getPersonD()){
+             if(p.getPersonID() == Integer.parseInt(txtId.getText())){
+                 check = 1;
+
+
+
+
+                 String date = txtEdate.getText();
+                 double temperature = Double.parseDouble(txtTemp.getText());
+                 double bloodPressure = Double.parseDouble(txtBp.getText());
+                 int pulse = Integer.parseInt(txtPulse.getText());
+                 int encounter = Integer.parseInt(txtEno.getText());
+                 int id = Integer.parseInt(txtId.getText());
+                 String community = txtComm.getText();
+
+                 VitalSigns vs = history.addNewVitals();
+
+                 vs.setBloodPressure(bloodPressure);
+                 vs.setDate(date);
+                 vs.setPulse(pulse);
+                 vs.setTemperature(temperature);
+                 vs.setEncounter(encounter);
+                 vs.setId(id);
+                 JOptionPane.showMessageDialog(this, "Person Vitals added to Encounter History !");
+
+                 if(bloodPressure <90 || bloodPressure >120){
+
+                 patient pa = patientD.addNewPatient();
+
+                 pa.setBp(bloodPressure);
+                 pa.setEdate(date);
+                 pa.setEno(encounter);
+                 pa.setPid(id);
+                 pa.setPul(pulse);
+                 pa.setTemp(temperature);
+                 pa.setComm(community);
+
+                 }
+
+
+
+             }
        }
                 
     
@@ -241,7 +279,11 @@ public class VitalsJPanel extends javax.swing.JPanel {
                 
             }
         
-      
+        }
+        
+       else {
+            JOptionPane.showMessageDialog(this, "ERROR! Enter the correct value in the field.");} 
+        
     }//GEN-LAST:event_btnSaveActionPerformed
 
 

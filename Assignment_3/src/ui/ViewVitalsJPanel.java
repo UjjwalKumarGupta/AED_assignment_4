@@ -46,6 +46,8 @@ public class ViewVitalsJPanel extends javax.swing.JPanel {
         txtRecord = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
         lblTitle.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblTitle.setForeground(new java.awt.Color(204, 0, 0));
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

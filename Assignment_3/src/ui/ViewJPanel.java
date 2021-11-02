@@ -5,6 +5,8 @@
  */
 package ui;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.person;
@@ -53,6 +55,8 @@ public class ViewJPanel extends javax.swing.JPanel {
         txtName = new javax.swing.JTextField();
         txtCity = new javax.swing.JTextField();
         txtCommunity = new javax.swing.JTextField();
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         lblTitle.setBackground(new java.awt.Color(255, 255, 255));
         lblTitle.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -226,7 +230,36 @@ public class ViewJPanel extends javax.swing.JPanel {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        int selectedRowIndex = tblPerson.getSelectedRow();
+        boolean check;
+        String alphapattern = "^[a-zA-Z\\s]{1,}$";
+        String numpattern = "\\d+";
+        String alphanum = "^[a-zA-Z0-9\\s]+$";
+        
+        Pattern aP = Pattern.compile(alphapattern);
+        Pattern nP = Pattern.compile(numpattern);
+        Pattern an = Pattern.compile(alphanum);
+        
+        Matcher cM = aP.matcher(txtName.getText());
+        Matcher mM = aP.matcher(txtCommunity.getText());
+        Matcher ctM = aP.matcher(txtCity.getText());
+        Matcher yM = an.matcher(txtHouse.getText());
+        Matcher sM = nP.matcher(txtId.getText());
+        Matcher sr = nP.matcher(txtAge.getText());
+        
+        if ((!cM.matches()) || (!mM.matches()) || (!ctM.matches()) || (!yM.matches())|| (!sM.matches()) || (!sr.matches()))
+            {
+            check=false;
+            }
+         
+         else{
+                check=true;
+            }
+        
+        
+        
+        
+        if (check == true){
+            int selectedRowIndex = tblPerson.getSelectedRow();
             DefaultTableModel model = (DefaultTableModel)tblPerson.getModel();
             person p = (person)model.getValueAt(selectedRowIndex, 0);
 
@@ -252,7 +285,10 @@ public class ViewJPanel extends javax.swing.JPanel {
 
                 JOptionPane.showMessageDialog(this, "Error updating");
             }
-           
+        }
+        
+        else {
+            JOptionPane.showMessageDialog(this, "ERROR! Enter the correct value in the field.");} 
         
        
         
@@ -263,6 +299,19 @@ public class ViewJPanel extends javax.swing.JPanel {
 
     private void btnUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate1ActionPerformed
         // TODO add your handling code here:
+        int selectedRowIndex = tblPerson.getSelectedRow();
+        if(selectedRowIndex<0){
+        JOptionPane.showMessageDialog(this, "Please Select a Row !");
+            return;
+        }
+      DefaultTableModel model = (DefaultTableModel) tblPerson.getModel();
+      
+      person p = (person) model.getValueAt(selectedRowIndex, 0);
+      personD.deletePerson(p);
+      
+      populateTable();
+      
+        
     }//GEN-LAST:event_btnUpdate1ActionPerformed
 
     private void btnviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnviewActionPerformed

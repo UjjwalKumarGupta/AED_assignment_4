@@ -5,6 +5,8 @@
  */
 package ui;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import model.personDirectory;
 import model.person;
@@ -46,6 +48,8 @@ public class CreateJPanel extends javax.swing.JPanel {
         lblHouse = new javax.swing.JLabel();
         txtAge = new javax.swing.JTextField();
         lblHouse1 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         txtCity.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -155,23 +159,57 @@ public class CreateJPanel extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        String name = txtName.getText();
-        int personID = Integer.parseInt(txtId.getText());
-        String community = txtCommunity.getText();
-        int age = Integer.parseInt(txtAge.getText());
-        String city = txtCity.getText();
-        String house = txtHouse.getText();
+        boolean check;
+        String alphapattern = "^[a-zA-Z\\s]{1,}$";
+        String numpattern = "\\d+";
+        String alphanum = "^[a-zA-Z0-9\\s]+$";
         
-        person p = personD.addNewPerson();
+        Pattern aP = Pattern.compile(alphapattern);
+        Pattern nP = Pattern.compile(numpattern);
+        Pattern an = Pattern.compile(alphanum);
         
-        p.setPersonID(personID);
-        p.setAge(age);
-        p.setCity(city);
-        p.setCommunity(community);
-        p.setHouse(house);
-        p.setName(name);
+        Matcher cM = aP.matcher(txtName.getText());
+        Matcher mM = aP.matcher(txtCommunity.getText());
+        Matcher ctM = aP.matcher(txtCity.getText());
+        Matcher yM = an.matcher(txtHouse.getText());
+        Matcher sM = nP.matcher(txtId.getText());
+        Matcher sr = nP.matcher(txtAge.getText());
         
-        JOptionPane.showMessageDialog(this, "Person details added to Directory !");
+        
+        if ((!cM.matches()) || (!mM.matches()) || (!ctM.matches()) || (!yM.matches())|| (!sM.matches()) || (!sr.matches()) || personD.uni(txtId.getText()) )
+            {
+            check=false;
+            }
+         
+         else{
+                check=true;
+            }
+        
+        
+        
+        
+        if (check == true){
+        
+            String name = txtName.getText();
+            int personID = Integer.parseInt(txtId.getText());
+            String community = txtCommunity.getText();
+            int age = Integer.parseInt(txtAge.getText());
+            String city = txtCity.getText();
+            String house = txtHouse.getText();
+
+            person p = personD.addNewPerson();
+
+            p.setPersonID(personID);
+            p.setAge(age);
+            p.setCity(city);
+            p.setCommunity(community);
+            p.setHouse(house);
+            p.setName(name);
+
+            JOptionPane.showMessageDialog(this, "Person details added to Directory !");}
+        
+        else {
+            JOptionPane.showMessageDialog(this, "ERROR! Enter the correct value in the field.");}
         
         
         

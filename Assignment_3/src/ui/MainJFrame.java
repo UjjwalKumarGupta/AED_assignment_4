@@ -46,8 +46,11 @@ public class MainJFrame extends javax.swing.JFrame {
         btnViewVitals = new javax.swing.JButton();
         btnPatients = new javax.swing.JButton();
         workArea = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        controlPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         btnCreate.setBackground(new java.awt.Color(204, 0, 0));
         btnCreate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -126,15 +129,28 @@ public class MainJFrame extends javax.swing.JFrame {
 
         splitPane.setLeftComponent(controlPanel);
 
+        workArea.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Monotype Corsiva", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("HOSPITAL MANAGEMENT SYSTEM");
+
         javax.swing.GroupLayout workAreaLayout = new javax.swing.GroupLayout(workArea);
         workArea.setLayout(workAreaLayout);
         workAreaLayout.setHorizontalGroup(
             workAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 657, Short.MAX_VALUE)
+            .addGroup(workAreaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE)
+                .addContainerGap())
         );
         workAreaLayout.setVerticalGroup(
             workAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 598, Short.MAX_VALUE)
+            .addGroup(workAreaLayout.createSequentialGroup()
+                .addGap(285, 285, 285)
+                .addComponent(jLabel1)
+                .addContainerGap(286, Short.MAX_VALUE))
         );
 
         splitPane.setRightComponent(workArea);
@@ -228,6 +244,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnViewVitals;
     private javax.swing.JButton btnVitals;
     private javax.swing.JPanel controlPanel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JSplitPane splitPane;
     private javax.swing.JPanel workArea;
     // End of variables declaration//GEN-END:variables
